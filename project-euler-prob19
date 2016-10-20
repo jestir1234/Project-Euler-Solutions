@@ -1,0 +1,76 @@
+def sundays
+    
+jan = Array (1..31)
+feb_norm = Array (1..28)
+feb_leap = Array (1..29)
+mar = Array (1..31)
+april = Array (1..30)
+may = Array (1..31)
+june = Array (1..30)
+july = Array (1..31)
+aug = Array (1..31)
+sept = Array (1..30)
+oct = Array (1..31)
+nov = Array (1..30)
+dec = Array (1..31)
+
+months = [jan, [feb_norm, feb_leap], mar, april, may, june, july, aug, sept, oct, nov, dec]
+
+#week = ["sun", "mon", "tues", "wed", "thur", "fri", "sat"]
+year = []
+result = []
+sundays = []
+first_sundays = []
+current_idx = 1
+1900.upto(2000) do |x|
+    start_month = 0
+    until start_month == 12
+        if start_month == 1
+            if x % 4 == 0
+                result.push(iterator(months[start_month[1]], current_idx))
+            else
+                result.push(iterator(months[start_month[0]], current_idx))
+            end
+        end
+            result.push(iterator(months[start_month], current_idx))
+            sundays.push(result[0][0])
+            if result[0][0][0] == 1
+                first_sundays.push(result[0][0][0])
+            end
+            puts "#{result[0][0]} for #{start_month} and the current idx is #{result[0][1]}, year #{x}, first sundays count is #{first_sundays.length}"
+            result.delete(result[0][0])
+            #puts "#{result[0][1]} is the idx"
+            current_idx = result[0][1]
+            result = []
+            start_month += 1
+            year.push(x)
+            if x == 1900
+                sundays = []
+                first_sundays = []
+            end
+
+    end
+ end
+    sundays = sundays.flatten.reject! { |x| x != 1 }
+    return sundays.length
+end
+
+def iterator(month, day_idx)
+    start_day = day_idx
+    sundays = []
+    x = 1
+    until x > month.length
+        if start_day == 0
+            sundays.push(x)
+            start_day += 1
+        elsif start_day == 6
+            start_day = 0
+        else
+            start_day += 1
+        end
+        x += 1
+    end
+    return [sundays, start_day]
+
+end
+sundays

@@ -1,0 +1,28 @@
+def divisors(n)
+    x = 1
+    factors = []
+    while x < n
+        if n % x == 0
+            factors.push(x)
+        end
+        x += 1
+    end
+    if factors.any?
+        return factors.reduce(:+)
+    else
+        return 0
+    end
+end
+
+def amicable_pair(number)
+    x = 1
+    amicable = []
+    while x < number
+        if x == divisors(divisors(x)) && x != divisors(x)
+            amicable.push(x)
+        end
+        x += 1
+    end
+    return amicable.uniq.reduce(:+)
+end
+amicable_pair(10000)

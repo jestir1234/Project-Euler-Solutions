@@ -1,0 +1,16 @@
+def n_product(n)
+    product = 1
+    n.downto(1) do |x|
+        product = product * x
+    end
+    return digit_adder(product)
+end
+def digit_adder(number)
+    number = number.to_s
+    sum = 0
+    number = number.split("").each do |x|
+    sum += x.to_i
+    end
+    return sum
+end
+n_product(100)
