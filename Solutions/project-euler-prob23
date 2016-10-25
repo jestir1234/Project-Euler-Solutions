@@ -1,0 +1,48 @@
+def abundant?(number)
+    x = 1
+    factors = []
+    while x < number
+        if number % x == 0
+            factors.push(x)
+        end
+        x += 1
+    end
+    if factors.empty?
+        return false
+    end
+    if factors.reduce(:+) > number
+        true
+    else
+        false
+    end
+end
+#abundant?(12)
+def all_abundant
+    abundant = []
+    28123.downto(1) { |x| if abundant?(x)
+        abundant.push(x)
+    end
+    }
+    bad_numbers = number_add(abundant)
+    selection = []
+    28123.downto(1) { |x| if !bad_numbers.include?(x)
+        selection.push(x)
+    end
+    }
+    return selection.reduce(:+)
+
+end
+def number_add(array)
+    result = []
+    x = 0
+    while x < array.length
+        y = 0
+        while y < array.length
+            result.push(array[x] + array[y])
+            y += 1
+        end
+        x += 1
+    end
+    return result
+end
+all_abundant

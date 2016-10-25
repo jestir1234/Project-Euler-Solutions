@@ -1,0 +1,76 @@
+def letter_counter(number)
+    letter_hash = {
+        0 => 'zero',
+        1 => 'one',
+        2 => 'two',
+        3 => 'three',
+        4 => 'four',
+        5 => 'five',
+        6 => 'six',
+        7 => 'seven',
+        8 => 'eight',
+        9 => 'nine',
+        10 => 'ten',
+        11 => 'eleven',
+        12 => 'twelve',
+        13 => 'thirteen',
+        14 => 'fourteen',
+        15 => 'fifteen',
+        16 => 'sixteen',
+        17 => 'seventeen',
+        18 => 'eighteen',
+        19 => 'nineteen',
+        20 => 'twenty',
+        30 => 'thirty',
+        40 => 'forty',
+        50 => 'fifty',
+        60 => 'sixty',
+        70 => 'seventy',
+        80 => 'eighty',
+        90 => 'ninety',
+        100 => 'hundred',
+        1000 => 'thousand'
+    }
+    array = []
+    number = number.to_s
+    if number.length <= 1
+        array.push(letter_hash[number.to_i])
+    elsif number.length > 1 && number.length < 3 && number.to_i < 20
+        array.push(letter_hash[number.to_i])
+    elsif number.length > 1 && number.length < 3 && number.to_i >= 20
+        if letter_hash.include?(number[0].to_i * 10)
+            array.push(letter_hash[number[0].to_i * 10])
+            if number[1] != '0'
+                array.push(letter_hash[number[1].to_i])
+            end
+        end
+    elsif number.length > 2 && number.length < 4
+        array.push(letter_hash[number[0].to_i])
+        array.push(letter_hash[100])
+        two_digit = (number[1] + number[2]).to_i
+        if letter_hash.include?(two_digit) && two_digit != 0
+            array.push("and")
+            array.push(letter_hash[two_digit])
+        elsif letter_hash.include?(number[1].to_i * 10) && two_digit != 0
+            array.push("and")
+            array.push(letter_hash[number[1].to_i * 10])
+            array.push(letter_hash[number[2].to_i])
+        end
+    else
+        array.push(letter_hash[number[0].to_i])
+        array.push(letter_hash[1000])
+        
+    end
+    return array
+end
+
+def number(n)
+    array = Array (1..n)
+    numbers_array = array.map! do |x|
+        letter_counter(x)
+    end 
+    numbers_array.flatten
+    numbers_array = numbers_array.join
+    return numbers_array.length
+end
+number(1000)
